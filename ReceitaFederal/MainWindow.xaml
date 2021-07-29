@@ -1,0 +1,190 @@
+﻿<mah:MetroWindow
+    x:Class="ReceitaFederal.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ReceitaFederal"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+    xmlns:views="clr-namespace:ReceitaFederal.Views"
+    Title="Receita Federal"
+    Width="800"
+    Height="450"
+    ResizeMode="CanResizeWithGrip"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <mah:MetroWindow.LeftWindowCommands>
+        <mah:WindowCommands>
+            <Button  ToolTip="Receita Federal">
+                <iconPacks:PackIconMaterial Width="22"
+                                  Height="22"
+                                  Kind="AlphaR" />
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.LeftWindowCommands>
+
+    <mah:MetroWindow.RightWindowCommands>
+        <mah:WindowCommands>
+            <Button Click="Button_Click_1" x:Name="ButtonIcon" Content="Verifica e cria tabelas e bancos">
+                <Button.ContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" >
+                            <iconPacks:PackIconModern Width="22"
+                                        Height="22"
+                                        VerticalAlignment="Center"
+                                        Kind="DatabaseSql" />
+                            <TextBlock Margin="4 0 0 0"
+                         VerticalAlignment="Center"
+                         Text="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </Button.ContentTemplate>
+            </Button>
+        </mah:WindowCommands>
+    </mah:MetroWindow.RightWindowCommands>
+
+    <mah:MetroWindow.Resources>
+        <ResourceDictionary>
+
+            <!--  This is the template for all menu items. In this sample we use the glyph items.  -->
+            <DataTemplate x:Key="HamburgerMenuItem" DataType="{x:Type mah:HamburgerMenuIconItem}">
+                <DockPanel Height="48" LastChildFill="True">
+                    <ContentControl x:Name="IconPart"
+                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}"
+                        Content="{Binding Icon}"
+                        DockPanel.Dock="Left"
+                        Focusable="False"
+                        IsTabStop="False" />
+                    <TextBlock x:Name="TextPart"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   Text="{Binding Label}" />
+                </DockPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
+                        <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
+                        <Setter TargetName="TextPart" Property="Margin" Value="8 0 0 0" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+            <!--  This is the template for the option menu item  -->
+            <DataTemplate x:Key="HamburgerOptionsMenuItem" DataType="{x:Type mah:HamburgerMenuIconItem}">
+                <DockPanel Height="48" LastChildFill="True">
+                    <ContentControl x:Name="IconPart" 
+                        Width="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=CompactPaneLength}"
+                        Content="{Binding Icon}"
+                        DockPanel.Dock="Left"
+                        Focusable="False"
+                        IsTabStop="False" />
+                    <TextBlock x:Name="TextPart"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   Text="{Binding Label}" />
+                </DockPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type mah:HamburgerMenu}}, Path=PanePlacement}" Value="Right">
+                        <Setter TargetName="IconPart" Property="DockPanel.Dock" Value="Right" />
+                        <Setter TargetName="TextPart" Property="Margin" Value="8 0 0 0" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </ResourceDictionary>
+    </mah:MetroWindow.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+
+        <mah:HamburgerMenu x:Name="HamburgerMenuControl" DisplayMode="CompactOverlay" HamburgerWidth="48" Grid.Row="0" 
+                          ItemTemplate="{StaticResource HamburgerMenuItem}"
+                           ItemInvoked="HamburgerMenuControl_OnItemInvoked"
+                          OptionsItemTemplate="{StaticResource HamburgerOptionsMenuItem}">
+            <mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   Foreground="White"
+                   Text="Menus"></TextBlock>
+                </DataTemplate>
+            </mah:HamburgerMenu.HamburgerMenuHeaderTemplate>
+
+            <mah:HamburgerMenu.ItemsSource>
+                <mah:HamburgerMenuItemCollection>
+                    <mah:HamburgerMenuIconItem Label="Download arquivos receita">
+                        <mah:HamburgerMenuIconItem.Icon>
+                            <iconPacks:PackIconTypicons Kind="Download" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        </mah:HamburgerMenuIconItem.Icon>
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:download/>
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+
+                    <mah:HamburgerMenuIconItem Label="Descompactar zip">
+                        <mah:HamburgerMenuIconItem.Icon>
+                            <iconPacks:PackIconJamIcons Kind="FolderZip" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                        </mah:HamburgerMenuIconItem.Icon>
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:ZipView></views:ZipView>
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+
+
+                    <mah:HamburgerMenuIconItem Label="Salva no banco">
+                        <mah:HamburgerMenuIconItem.Icon>
+                            <iconPacks:PackIconEntypo Kind="Database" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                        </mah:HamburgerMenuIconItem.Icon>
+                        <mah:HamburgerMenuIconItem.Tag>
+                            <views:Importa></views:Importa>
+                        </mah:HamburgerMenuIconItem.Tag>
+                    </mah:HamburgerMenuIconItem>
+
+                </mah:HamburgerMenuItemCollection>
+            </mah:HamburgerMenu.ItemsSource>
+
+
+            <!--  Content  -->
+            <mah:HamburgerMenu.ContentTemplate>
+                <DataTemplate>
+                    <Grid x:Name="ContentGrid">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="36" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border Grid.Row="0"
+                                BorderBrush="DimGray" 
+                                Margin="-1 0 -1 0"
+                                Background="#7A7A7A">
+                            <TextBlock x:Name="Header"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="24"
+                       Foreground="White"
+                       Text="{Binding Label}" />
+                        </Border>
+                        <mah:TransitioningContentControl Grid.Row="1"
+                                                Content="{Binding}"
+                                                RestartTransitionOnContentChange="True"
+                                                Transition="Default">
+
+                            <mah:TransitioningContentControl.Resources>
+                                <DataTemplate DataType="{x:Type mah:HamburgerMenuIconItem}">
+                                    <ContentControl x:Name="TheContent"
+                                        Grid.Row="1"
+                                        Focusable="False"
+                                        Content="{Binding Tag}" />
+                                </DataTemplate>
+                            </mah:TransitioningContentControl.Resources>
+                        </mah:TransitioningContentControl>
+                    </Grid>
+                </DataTemplate>
+            </mah:HamburgerMenu.ContentTemplate>
+        </mah:HamburgerMenu>
+    </Grid>
+</mah:MetroWindow>
